@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>demo</title>
+</head>
+<body>
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(function () {
+        //do somethings
+        const data = [
+            {
+                name: "首页",
+            },
+            {
+                name: "一级菜单", value: [
+                    {name: "第一单元", value: ["第一课", "第二课", "第三课", "第四课"]},
+                    {name: "第二单元", value: ["第一课", "第二课", "第三课", "第四课"]},
+                    {name: "第三单元", value: ["第一课", "第二课", "第三课", "第四课"]},
+                    {name: "第四单元", value: ["第一课", "第二课", "第三课", "第四课"]}
+                ]
+            },
+            {
+                name: "一级菜单", value: [
+                    {name: "第一单元", value: ["第一课", "第二课", "第三课", "第四课"]},
+                    {name: "第二单元", value: ["第一课", "第二课", "第三课", "第四课"]},
+                    {name: "第三单元", value: ["第一课", "第二课", "第三课", "第四课"]},
+                    {name: "第四单元", value: ["第一课", "第二课", "第三课", "第四课"]}
+                ]
+            },
+            {
+                name: "一级菜单", value: [
+                    {name: "第一单元", value: ["第一课", "第二课", "第三课", "第四课"]},
+                    {name: "第二单元", value: ["第一课", "第二课", "第三课", "第四课"]},
+                    {name: "第三单元", value: ["第一课", "第二课", "第三课", "第四课"]},
+                    {name: "第四单元", value: ["第一课", "第二课", "第三课", "第四课"]}
+                ]
+            }
+        ];
+
+        init();
+
+        function init() {
+            createUl(data, document.body);
+            const lis = document.querySelectorAll("li");
+            for (let i = 0; i < lis.length; i++) {
+                // lis[i].addEventListener("click", clickHandler);
+                // lis[i].on("click", clickHandler);
+                $("li").on("click",clickHandler)
+            }
+        }
+
+        function createUl(list, parent) {
+            const ul = document.createElement("ul");
+            if (Array.isArray(list)) {
+                for (let i = 0; i < list.length; i++) {
+                    const li = document.createElement("li");
+                    if (list[i].name) {
+                        li.textContent = list[i].name;
+                    } else {
+                        li.textContent = list[i];
+                    }
+                    if (Array.isArray(list[i].value)) {
+                        createUl(list[i].value, li);
+                    }
+                    ul.appendChild(li);
+                }
+            }
+            parent.appendChild(ul);
+        }
+
+        function clickHandler(e) {
+            e.stopPropagation();//阻止冒泡
+            if (!this.firstElementChild) return;
+            this.bool = !this.bool;
+            if (this.bool) this.firstElementChild.style.display = "none";
+            if (!this.bool) this.firstElementChild.style.display = "block";
+        }
+
+    });
+</script>
+</body>
+</html>
